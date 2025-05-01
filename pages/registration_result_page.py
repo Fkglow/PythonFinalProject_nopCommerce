@@ -3,7 +3,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from common.base_page import BasePage
 
-
 class RegistrationResultPageLocators:
     PAGE_BODY = (By.CSS_SELECTOR, ".registration-result-page")
     CONTINUE_LINK_BUTTON = (By.CSS_SELECTOR, ".register-continue-button")

@@ -11,7 +11,7 @@ class HeaderLocators:
     CURRENCY_SELECT = (By.ID, "customerCurrency")
     HEADER_LINKS = (By.CLASS_NAME, "header-links")
     REGISTER_LINK_BUTTON = (By.CLASS_NAME, "ico-register")
-    LOG_IN_LINK_BUTTON = (By.CLASS_NAME, "ico-login")
+    LOG_IN_LINK_BUTTON = (By.CSS_SELECTOR, ".header-links ul li:nth-child(2) a")
     WISHLIST_LINK_BUTTON = (By.CLASS_NAME, "ico-wishlist")
     SHOPPING_CART_LINK_BUTTON = (By.ID, "topcartlink")
     # LOWER HEADER
@@ -27,11 +27,11 @@ class Header:
         # self.currency_select = Select(self.driver.find_element(*HeaderLocators.CURRENCY_SELECT))
 
     # UPPER HEADER
-    def get_selected_currency(self):
-        return self.currency_select.all_selected_options
-
-    def select_currency_by_visible_text(self, currency):
-        self.currency_select.select_by_visible_text(currency)
+    # def get_selected_currency(self):
+    #     return self.currency_select.all_selected_options
+    #
+    # def select_currency_by_visible_text(self, currency):
+    #     self.currency_select.select_by_visible_text(currency)
 
     def click_register_button(self):
         self.header_links.find_element(*HeaderLocators.REGISTER_LINK_BUTTON).click()
@@ -40,6 +40,10 @@ class Header:
     def click_login_button(self):
         self.header_links.find_element(*HeaderLocators.LOG_IN_LINK_BUTTON).click()
         return LoginPage(self.driver)
+
+    def get_login_button_text(self):
+        el = self.driver.find_element(*HeaderLocators.LOG_IN_LINK_BUTTON)
+        return el.text
 
     def click_wishlist_button(self):
         self.header_links.find_element(*HeaderLocators.WISHLIST_LINK_BUTTON).click()

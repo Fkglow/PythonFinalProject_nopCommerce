@@ -1,6 +1,7 @@
 import random
 
 from selenium.common import TimeoutException, NoSuchElementException
+from selenium.webdriver import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 from common.base_page import BasePage
@@ -28,9 +29,6 @@ class RegistrationPageLocators:
 
 class RegistrationPage(BasePage):
 
-    # def __init__(self):
-    #     self.wait_5s.until(EC.visibility_of_element_located(RegistrationPageLocators.FIRST_NAME_INPUT))
-
     def select_random_gender(self):
         random_nr = random.randint(0,1)
         radio_buttons = self.driver.find_elements(*RegistrationPageLocators.GENDER_RADIO_BUTTONS)
@@ -46,7 +44,9 @@ class RegistrationPage(BasePage):
 
     def enter_email(self, email):
         el = self.driver.find_element(*RegistrationPageLocators.EMAIL_INPUT)
+        el.clear()
         el.send_keys(email)
+        el.send_keys(Keys.TAB)      #required to reload field validation
 
     def enter_company_name(self, name):
         el = self.driver.find_element(*RegistrationPageLocators.COMPANY_NAME_INPUT)
@@ -55,10 +55,12 @@ class RegistrationPage(BasePage):
     def enter_main_password(self, password):
         el = self.driver.find_element(*RegistrationPageLocators.PASSWORD_INPUT)
         el.send_keys(password)
+        el.send_keys(Keys.TAB)  # required to reload field validation
 
     def enter_confirm_password(self, password):
         el = self.driver.find_element(*RegistrationPageLocators.CONFIRM_PASSWORD_INPUT)
         el.send_keys(password)
+        el.send_keys(Keys.TAB)  # required to reload field validation
 
     def click_register_button(self):
         self.driver.find_element(*RegistrationPageLocators.REGISTER_BUTTON).click()
@@ -82,10 +84,10 @@ class RegistrationPage(BasePage):
         input = self.driver.find_element(By.XPATH, f"//label[contains(text(), '{field_name}')]")
         input_id = input.get_attribute("for")
         try:
-            error_message = self.driver.find_element(By.CSS_SELECTOR, f"#{input_id}-error")
+            error_mess_locator = (By.CSS_SELECTOR, f"#{input_id}-error")
+            error_message = self.wait_5s.until(EC.visibility_of_element_located(error_mess_locator))
             return error_message.text
         except TimeoutException:
             print("Element was not found")
             return None
-
 

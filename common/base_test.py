@@ -9,7 +9,7 @@ class BaseTest(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Chrome()
         self.driver.maximize_window()
-        self.driver.get(" ")
+        self.driver.get("http://localhost/")
         self.home_page = HomePage(self.driver)
 
     def tearDown(self):
