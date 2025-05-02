@@ -1,7 +1,8 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 
-from common.base_page import BasePage
+from pages.base_page import BasePage
+from helpers.support_functions import wait_5s_until_element_is_visible
+
 
 class RegistrationResultPageLocators:
     PAGE_BODY = (By.CSS_SELECTOR, ".registration-result-page")
@@ -15,7 +16,7 @@ class RegistrationResultPage(BasePage):
         self.wait_for_page_to_load()
 
     def wait_for_page_to_load(self):
-        self.wait_5s.until(EC.presence_of_element_located(RegistrationResultPageLocators.PAGE_BODY))
+        wait_5s_until_element_is_visible(self.driver, RegistrationResultPageLocators.PAGE_BODY)
 
     def click_continue_button(self):
         self.driver.find_element(*RegistrationResultPageLocators.CONTINUE_LINK_BUTTON).click()

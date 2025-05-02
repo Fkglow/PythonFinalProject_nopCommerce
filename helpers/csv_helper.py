@@ -18,3 +18,13 @@ class CsvDataManager:
             rows.append(row)
         return rows
 
+    @staticmethod
+    def get_emails_from_csv_file(filename):
+        emails = []
+        with open(filename, 'r') as data_file:
+            reader = csv.reader(data_file)
+            next(reader, None)
+            for row in reader:
+                emails.append(row[0])
+        return emails
+

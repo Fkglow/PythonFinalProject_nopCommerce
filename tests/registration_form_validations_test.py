@@ -1,4 +1,4 @@
-from common.base_test import BaseTest
+from tests.base_test import BaseTest
 from helpers.DataGenerator import DataGenerator
 
 

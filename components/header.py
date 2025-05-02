@@ -1,9 +1,9 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.select import Select
 
 from pages.login_page import LoginPage
 from pages.registration_page import RegistrationPage
-from pages.wishlist_page import WishListPage
+from pages.search_page import SearchPage
+from helpers.support_functions import *
 
 
 class HeaderLocators:
@@ -12,7 +12,6 @@ class HeaderLocators:
     HEADER_LINKS = (By.CLASS_NAME, "header-links")
     REGISTER_LINK_BUTTON = (By.CLASS_NAME, "ico-register")
     LOG_IN_LINK_BUTTON = (By.CSS_SELECTOR, ".header-links ul li:nth-child(2) a")
-    WISHLIST_LINK_BUTTON = (By.CLASS_NAME, "ico-wishlist")
     SHOPPING_CART_LINK_BUTTON = (By.ID, "topcartlink")
     # LOWER HEADER
     SEARCH_INPUT = (By.ID, "small-searchterms")
@@ -42,18 +41,8 @@ class Header:
         return LoginPage(self.driver)
 
     def get_login_button_text(self):
-        el = self.driver.find_element(*HeaderLocators.LOG_IN_LINK_BUTTON)
+        el = wait_5s_until_element_is_visible(self.driver, HeaderLocators.LOG_IN_LINK_BUTTON)
         return el.text
-
-    def click_wishlist_button(self):
-        self.header_links.find_element(*HeaderLocators.WISHLIST_LINK_BUTTON).click()
-        return WishListPage(self.driver)
-
-    def get_wishlist_count(self):
-        el = self.driver.find_element(By.CSS_SELECTOR, "span.wishlist-qty")
-        el_text =  el.getText()
-        wishlist_count = int(el_text.strip("()"))
-        return wishlist_count
 
     def get_shopping_cart_count(self):
         el = self.driver.find_element(By.CSS_SELECTOR, "span.cart-qty")
@@ -62,8 +51,9 @@ class Header:
         return shopping_cart_count
 
     # LOWER HEADER
-    def search_product(self, product_name):
+    def enter_product_in_search_input(self, product_name):
         self.driver.find_element(*HeaderLocators.SEARCH_INPUT).send_keys(product_name)
 
     def click_search_button(self):
         self.driver.find_element(*HeaderLocators.SEARCH_BUTTON).click()
+        return SearchPage(self.driver)

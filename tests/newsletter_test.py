@@ -1,6 +1,4 @@
-import time
-
-from common.base_test import BaseTest
+from tests.base_test import BaseTest
 
 class NewsletterTest(BaseTest):
 

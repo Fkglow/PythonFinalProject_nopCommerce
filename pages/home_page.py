@@ -3,10 +3,11 @@ import random
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from common.base_page import BasePage
+from pages.base_page import BasePage
 from components.footer import Footer
 from components.header import Header
 from components.header_menu import HeaderMenu
+from helpers.support_functions import wait_5s_until_element_is_visible
 
 
 class HomePageLocators:
@@ -51,6 +52,6 @@ class HomePage(BasePage):
         return alert.text
 
     def get_community_poll_validation_message(self):
-        el = self.wait_5s.until(EC.visibility_of_element_located(HomePageLocators.COMMUNITY_POLL_VALIDATION_MESSAGE))
+        el = wait_5s_until_element_is_visible(self.driver, HomePageLocators.COMMUNITY_POLL_VALIDATION_MESSAGE)
         return el.text
 

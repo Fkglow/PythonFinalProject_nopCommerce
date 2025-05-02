@@ -1,6 +1,6 @@
-from common.base_test import BaseTest
+from tests.base_test import BaseTest
 from helpers.DataGenerator import DataGenerator
-from test_data.csv_helper import CsvDataManager
+from helpers.csv_helper import CsvDataManager
 
 class RegistrationTest(BaseTest):
 

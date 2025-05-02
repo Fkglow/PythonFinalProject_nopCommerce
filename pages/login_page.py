@@ -1,9 +1,9 @@
 from selenium.webdriver import Keys
 
-from common.base_page import BasePage
+from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 
+from helpers.support_functions import wait_5s_until_element_is_visible
 from pages.password_recovery_page import PasswordRecoveryPage
 
 
@@ -41,11 +41,16 @@ class LoginPage(BasePage):
         return PasswordRecoveryPage()
 
     def is_validation_message_displayed(self):
-        el = self.wait_5s.until(EC.visibility_of_element_located(LoginPageLocators.LOGIN_VALIDATION_ERROR))
+        el = wait_5s_until_element_is_visible(self.driver, LoginPageLocators.LOGIN_VALIDATION_ERROR)
         return el.is_displayed()
 
     def get_login_summary_validation_error_message(self):
         el = self.driver.find_element(*LoginPageLocators.LOGIN_VALIDATION_ERROR)
         return el.text
+
+    def click_forgot_password(self):
+        el = self.driver.find_element(*LoginPageLocators.FORGOT_PASSWORD_LINK_BUTTON)
+        el.click()
+        return PasswordRecoveryPage(self.driver)
 
 

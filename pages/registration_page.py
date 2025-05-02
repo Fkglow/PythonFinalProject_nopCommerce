@@ -1,12 +1,12 @@
 import random
 
-from selenium.common import TimeoutException, NoSuchElementException
+from selenium.common import TimeoutException
 from selenium.webdriver import Keys
-from selenium.webdriver.support import expected_conditions as EC
 
-from common.base_page import BasePage
+from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 
+from helpers.support_functions import wait_5s_until_element_is_visible
 from pages.registration_result_page import RegistrationResultPage
 
 
@@ -85,7 +85,7 @@ class RegistrationPage(BasePage):
         input_id = input.get_attribute("for")
         try:
             error_mess_locator = (By.CSS_SELECTOR, f"#{input_id}-error")
-            error_message = self.wait_5s.until(EC.visibility_of_element_located(error_mess_locator))
+            error_message = wait_5s_until_element_is_visible(self.driver, error_mess_locator)
             return error_message.text
         except TimeoutException:
             print("Element was not found")

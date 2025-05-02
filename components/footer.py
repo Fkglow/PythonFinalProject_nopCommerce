@@ -1,8 +1,7 @@
 from selenium.webdriver.common.by import By
 
-from common.base_page import BasePage
+from pages.base_page import BasePage
 from helpers.support_functions import *
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class FooterLocators:
@@ -25,10 +24,10 @@ class Footer(BasePage):
         el.click()
 
     def wait_for_subscribe_loader_to_disappear(self):
-        self.wait_5s.until(EC.invisibility_of_element_located(FooterLocators.SUBSCRIBE_LOADER))
+        wait_5s_until_element_is_no_longer_visible(self.driver, FooterLocators.SUBSCRIBE_LOADER)
 
     def get_newsletter_result_message(self):
-        el = self.wait_5s.until(EC.visibility_of_element_located(FooterLocators.NEWSLETTER_VALIDATION_MESSAGE))
+        el = wait_5s_until_element_is_visible(FooterLocators.NEWSLETTER_VALIDATION_MESSAGE)
         return el.text
 
 
