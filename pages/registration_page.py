@@ -17,6 +17,7 @@ class RegistrationPageLocators:
     FIRST_NAME_INPUT = (By.ID, "FirstName")
     LAST_NAME_INPUT = (By.ID, "LastName")
     EMAIL_INPUT = (By.ID, "Email")
+    EMAIL_FIELD_ERROR = (By.ID, "Email-error")
     # COMPANY DETAILS
     COMPANY_NAME_INPUT = (By.ID, "Company")
     # OPTIONS
@@ -41,6 +42,10 @@ class RegistrationPage(BasePage):
     def enter_last_name(self, lastName):
         el = self.driver.find_element(*RegistrationPageLocators.LAST_NAME_INPUT)
         el.send_keys(lastName)
+
+    def get_email_field_validation_error(self):
+        el = self.driver.find_element(*RegistrationPageLocators.EMAIL_FIELD_ERROR)
+        return el.text
 
     def enter_email(self, email):
         el = self.driver.find_element(*RegistrationPageLocators.EMAIL_INPUT)

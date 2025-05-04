@@ -1,3 +1,5 @@
+from selenium.webdriver import Keys
+
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 
@@ -27,9 +29,10 @@ class ContactUsPage(BasePage):
     def enter_email(self, email):
         el = self.driver.find_element(*ContactUsPageLocators.EMAIL_INPUT)
         el.send_keys(email)
+        el.send_keys(Keys.TAB)
 
     def get_email_field_validation_error(self):
-        el = self.driver.find_element(*ContactUsPageLocators.EMAIL_FIELD_ERROR)
+        el = wait_5s_until_element_is_visible(self.driver, ContactUsPageLocators.EMAIL_FIELD_ERROR)
         return el.text
 
     def enter_enquiry(self, name):

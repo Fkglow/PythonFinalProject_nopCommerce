@@ -1,11 +1,12 @@
 import random
 
+from tests.abstract_email_field_validation_test import AbstractEmailFieldValidationTest
 from tests.base_test import BaseTest
 from helpers.DataGenerator import DataGenerator
 from helpers.csv_helper import CsvDataManager
 
 
-class PasswordRecoveryTest(BaseTest):
+class PasswordRecoveryTest(AbstractEmailFieldValidationTest):
 
     def setUp(self):
         super().setUp()
@@ -26,3 +27,12 @@ class PasswordRecoveryTest(BaseTest):
         self.assertTrue(self.recover_pass_page.is_notification_bar_displayed())
         self.assertEqual("Email with instructions has been sent to you."
                          , self.recover_pass_page.get_notification_bar_content())
+
+    def test_invalid_email_is_validated(self):
+        self.test_invalid_email_validation()
+
+    def test_email_not_matching_regex_is_validated(self):
+        self.test_email_not_matching_regex_validation()
+
+    def get_page(self):
+        return self.recover_pass_page

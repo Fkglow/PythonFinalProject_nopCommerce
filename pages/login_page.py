@@ -11,6 +11,7 @@ class LoginPageLocators:
     REGISTER_BUTTON = (By.CLASS_NAME, "register-button")
     LOGIN_BUTTON = (By.CLASS_NAME, "login-button")
     EMAIL_INPUT = (By.ID, "Email")
+    EMAIL_FIELD_ERROR = (By.ID, "Email-error")
     PASSWORD_INPUT = (By.ID, "Password")
     FORGOT_PASSWORD_LINK_BUTTON = (By.CLASS_NAME, "forgot-password")
     LOGIN_VALIDATION_ERROR = (By.CLASS_NAME, "validation-summary-errors")
@@ -21,6 +22,10 @@ class LoginPage(BasePage):
         el = self.driver.find_element(*LoginPageLocators.EMAIL_INPUT)
         el.send_keys(email)
         el.send_keys(Keys.TAB)
+
+    def get_email_field_validation_error(self):
+        el = self.driver.find_element(*LoginPageLocators.EMAIL_FIELD_ERROR)
+        return el.text
 
     def enter_password(self, password):
         el = self.driver.find_element(*LoginPageLocators.PASSWORD_INPUT)

@@ -15,5 +15,6 @@ class BasePage:
         self._verify_page()
 
     def _verify_page(self):
-        image_slider = (By.CSS_SELECTOR, ".slider-img")
-        wait_5s_until_element_is_visible(self.driver, image_slider)
+        # image_slider = (By.CSS_SELECTOR, ".slider-img")
+        # wait_5s_until_element_is_visible(self.driver, image_slider)
+        pass

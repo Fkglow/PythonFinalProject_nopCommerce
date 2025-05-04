@@ -1,18 +1,22 @@
+import os.path
 import random
 
 from ddt import data, unpack, ddt
-from tests.base_test import BaseTest
+
+from tests.abstract_email_field_validation_test import AbstractEmailFieldValidationTest
 from helpers.DataGenerator import DataGenerator
 from helpers.csv_helper import CsvDataManager
 
 @ddt
-class LoginTests(BaseTest):
+class LoginTests(AbstractEmailFieldValidationTest):
+    base_dir = os.path.dirname(__file__)
+    file_path = os.path.join(base_dir, "..", "test_data", "valid_login_credentials")
 
     def setUp(self):
         super().setUp()
         self.login_page = self.home_page.header.click_login_button()
 
-    @data(*CsvDataManager.get_credentials_from_csv_file("../test_data/valid_login_credentials"))
+    @data(*CsvDataManager.get_credentials_from_csv_file(file_path))
     @unpack
     def test_successful_login(self, email, password):
         self.login_page.enter_email(email)
@@ -38,3 +42,11 @@ class LoginTests(BaseTest):
         self.assertEqual("Login was unsuccessful. Please correct the errors and try again. No customer account found"
                          , error_message)
 
+    def test_invalid_email_is_validated(self):
+        self.test_invalid_email_validation()
+
+    def test_email_not_matching_regex_is_validated(self):
+        self.test_email_not_matching_regex_validation()
+
+    def get_page(self):
+        return self.login_page

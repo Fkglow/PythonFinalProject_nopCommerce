@@ -27,7 +27,7 @@ class Footer(BasePage):
         wait_5s_until_element_is_no_longer_visible(self.driver, FooterLocators.SUBSCRIBE_LOADER)
 
     def get_newsletter_result_message(self):
-        el = wait_5s_until_element_is_visible(FooterLocators.NEWSLETTER_VALIDATION_MESSAGE)
+        el = wait_5s_until_element_is_visible(self.driver, FooterLocators.NEWSLETTER_VALIDATION_MESSAGE)
         return el.text
 
 

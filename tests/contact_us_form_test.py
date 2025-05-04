@@ -1,9 +1,10 @@
+from tests.abstract_email_field_validation_test import AbstractEmailFieldValidationTest
 from tests.base_test import BaseTest
 from helpers.DataGenerator import DataGenerator
 from pages.top_menu_links import TopMenuLInks
 
 
-class ContactUsFormTest(BaseTest):
+class ContactUsFormTest(AbstractEmailFieldValidationTest):
 
     def setUp(self):
         super().setUp()
@@ -22,3 +23,12 @@ class ContactUsFormTest(BaseTest):
         self.contact_us_page.click_submit_button()
         self.assertEqual("Your enquiry has been successfully sent to the store owner."
                          ,self.contact_us_page.get_submit_enquiry_result_message())
+
+    def test_invalid_email_is_validated(self):
+        self.test_invalid_email_validation()
+
+    def test_email_not_matching_regex_is_validated(self):
+        self.test_email_not_matching_regex_validation()
+
+    def get_page(self):
+        return self.contact_us_page

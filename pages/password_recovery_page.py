@@ -1,3 +1,4 @@
+from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
 from pages.base_page import BasePage
@@ -6,6 +7,7 @@ from helpers.support_functions import wait_5s_until_element_is_visible
 
 class PasswordRecoveryPageLocators:
     EMAIL_INPUT = (By.ID, "Email")
+    EMAIL_FIELD_ERROR = (By.ID, "Email-error")
     BAR_NOTIFICATION = (By.CSS_SELECTOR, ".bar-notification")
     BAR_NOTIFICATION_CONTENT = (By.CSS_SELECTOR, "p.content")
     RECOVER_BUTTON = (By.CSS_SELECTOR, ".password-recovery-button")
@@ -15,6 +17,11 @@ class PasswordRecoveryPage(BasePage):
     def enter_email(self, email):
         el = self.driver.find_element(*PasswordRecoveryPageLocators.EMAIL_INPUT)
         el.send_keys(email)
+        el.send_keys(Keys.TAB)
+
+    def get_email_field_validation_error(self):
+        el = self.driver.find_element(*PasswordRecoveryPageLocators.EMAIL_FIELD_ERROR)
+        return el.text
 
     def is_notification_bar_displayed(self):
         el = wait_5s_until_element_is_visible(self.driver, PasswordRecoveryPageLocators.BAR_NOTIFICATION)
