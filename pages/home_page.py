@@ -1,5 +1,6 @@
 import random
 
+import allure
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -27,6 +28,7 @@ class HomePage(BasePage):
         self.footer = Footer(self.driver)
         self.close_cookie_banner()
 
+    @allure.step
     def close_cookie_banner(self):
         try:
             cookie_banner = self.driver.find_element(*HomePageLocators.COOKIE_BANNER)
@@ -36,21 +38,26 @@ class HomePage(BasePage):
         except NoSuchElementException:
             pass
 
+    @allure.step
     def get_community_poll_radio_buttons_list(self):
         return self.driver.find_elements(*HomePageLocators.COMMUNITY_POLL_RADIO_BUTTONS)
 
+    @allure.step
     def select_random_poll_radio_button(self):
         random_nr = random.randint(0,3)
         radios = self.get_community_poll_radio_buttons_list()
         radios[random_nr].click()
 
+    @allure.step
     def click_vote_button(self):
         self.driver.find_element(*HomePageLocators.VOTE_BUTTON).click()
 
+    @allure.step
     def get_alert_text(self):
         alert = self.wait_5s.until(EC.alert_is_present())
         return alert.text
 
+    @allure.step
     def get_community_poll_validation_message(self):
         el = wait_5s_until_element_is_visible(self.driver, HomePageLocators.COMMUNITY_POLL_VALIDATION_MESSAGE)
         return el.text

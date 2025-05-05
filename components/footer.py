@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 
 from pages.base_page import BasePage
@@ -13,19 +14,23 @@ class FooterLocators:
 
 class Footer(BasePage):
 
+    @allure.step
     def enter_email_to_newsletter_input(self, email):
         el = self.driver.find_element(*FooterLocators.NEWSLETTER_EMAIL_INPUT)
         scroll_into_view(self.driver, el)
         el.send_keys(email)
 
+    @allure.step
     def click_subscribe_button(self):
         el = self.driver.find_element(*FooterLocators.SUBSCRIBE_BUTTON)
         scroll_into_view(self.driver, el)
         el.click()
 
+    @allure.step
     def wait_for_subscribe_loader_to_disappear(self):
         wait_5s_until_element_is_no_longer_visible(self.driver, FooterLocators.SUBSCRIBE_LOADER)
 
+    @allure.step
     def get_newsletter_result_message(self):
         el = wait_5s_until_element_is_visible(self.driver, FooterLocators.NEWSLETTER_VALIDATION_MESSAGE)
         return el.text

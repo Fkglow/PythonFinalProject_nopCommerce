@@ -1,3 +1,5 @@
+import allure
+
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
 
@@ -15,26 +17,32 @@ class SearchPageLocators:
 
 class SearchPage(BasePage):
 
+    @allure.step
     def click_search_button(self):
         el = self.driver.find_element(*SearchPageLocators.SEARCH_BUTTON)
         el.click()
 
+    @allure.step
     def mark_advanced_search_checkbox(self):
         el = self.driver.find_element(*SearchPageLocators.ADVANCED_SEARCH_CHECKBOX)
         el.click()
 
+    @allure.step
     def is_search_in_description_checkbox_displayed(self):
         el = wait_5s_until_element_is_visible(self.driver, SearchPageLocators.SEARCH_IN_DESCRIPTION_CHECKBOX)
         return el.is_displayed()
 
+    @allure.step
     def is_search_in_tags_checkbox_displayed(self):
         el = wait_5s_until_element_is_visible(self.driver, SearchPageLocators.SEARCH_IN_TAGS_CHECKBOX)
         return el.is_displayed()
 
+    @allure.step
     def get_validation_message(self):
         el = wait_5s_until_element_is_visible(self.driver, SearchPageLocators.VALIDATION_MESSAGE)
         return el.text
 
+    @allure.step
     def get_search_result_message(self):
         el = wait_5s_until_element_is_visible(self.driver, SearchPageLocators.RESULT_MESSAGE)
         return el.text

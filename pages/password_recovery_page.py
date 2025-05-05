@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
@@ -14,22 +15,27 @@ class PasswordRecoveryPageLocators:
 
 class PasswordRecoveryPage(BasePage):
 
+    @allure.step
     def enter_email(self, email):
         el = self.driver.find_element(*PasswordRecoveryPageLocators.EMAIL_INPUT)
         el.send_keys(email)
         el.send_keys(Keys.TAB)
 
+    @allure.step
     def get_email_field_validation_error(self):
         el = self.driver.find_element(*PasswordRecoveryPageLocators.EMAIL_FIELD_ERROR)
         return el.text
 
+    @allure.step
     def is_notification_bar_displayed(self):
         el = wait_5s_until_element_is_visible(self.driver, PasswordRecoveryPageLocators.BAR_NOTIFICATION)
         return el.is_displayed()
 
+    @allure.step
     def get_notification_bar_content(self):
         el = wait_5s_until_element_is_visible(self.driver, PasswordRecoveryPageLocators.BAR_NOTIFICATION_CONTENT)
         return el.text
 
+    @allure.step
     def click_recover_button(self):
         self.driver.find_element(*PasswordRecoveryPageLocators.RECOVER_BUTTON).click()

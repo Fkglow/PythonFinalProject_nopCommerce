@@ -1,5 +1,6 @@
 import random
 
+import allure
 from selenium.common import TimeoutException
 from selenium.webdriver import Keys
 
@@ -30,43 +31,52 @@ class RegistrationPageLocators:
 
 class RegistrationPage(BasePage):
 
+    @allure.step
     def select_random_gender(self):
         random_nr = random.randint(0,1)
         radio_buttons = self.driver.find_elements(*RegistrationPageLocators.GENDER_RADIO_BUTTONS)
         radio_buttons[random_nr].click()
 
-    def enter_first_name(self, firstName):
+    @allure.step
+    def enter_first_name(self, first_name):
         el = self.driver.find_element(*RegistrationPageLocators.FIRST_NAME_INPUT)
-        el.send_keys(firstName)
+        el.send_keys(first_name)
 
-    def enter_last_name(self, lastName):
+    @allure.step
+    def enter_last_name(self, last_name):
         el = self.driver.find_element(*RegistrationPageLocators.LAST_NAME_INPUT)
-        el.send_keys(lastName)
+        el.send_keys(last_name)
 
+    @allure.step
     def get_email_field_validation_error(self):
         el = self.driver.find_element(*RegistrationPageLocators.EMAIL_FIELD_ERROR)
         return el.text
 
+    @allure.step
     def enter_email(self, email):
         el = self.driver.find_element(*RegistrationPageLocators.EMAIL_INPUT)
         el.clear()
         el.send_keys(email)
         el.send_keys(Keys.TAB)      #required to reload field validation
 
+    @allure.step
     def enter_company_name(self, name):
         el = self.driver.find_element(*RegistrationPageLocators.COMPANY_NAME_INPUT)
         el.send_keys(name)
 
+    @allure.step
     def enter_main_password(self, password):
         el = self.driver.find_element(*RegistrationPageLocators.PASSWORD_INPUT)
         el.send_keys(password)
         el.send_keys(Keys.TAB)  # required to reload field validation
 
+    @allure.step
     def enter_confirm_password(self, password):
         el = self.driver.find_element(*RegistrationPageLocators.CONFIRM_PASSWORD_INPUT)
         el.send_keys(password)
         el.send_keys(Keys.TAB)  # required to reload field validation
 
+    @allure.step
     def click_register_button(self):
         self.driver.find_element(*RegistrationPageLocators.REGISTER_BUTTON).click()
         validation_errors = self.driver.find_elements(By.CLASS_NAME, "field-validation-error")
@@ -75,6 +85,7 @@ class RegistrationPage(BasePage):
         else:
             return RegistrationResultPage(self.driver)
 
+    @allure.step
     def get_list_of_fields_with_validation_errors(self):
         error_field_labels = []
         validation_errors = self.driver.find_elements(*RegistrationPageLocators.FIELD_VALIDATION_ERROR)
@@ -85,6 +96,7 @@ class RegistrationPage(BasePage):
             error_field_labels.append(label.text.rstrip(':'))
         return error_field_labels
 
+    @allure.step
     def get_field_error(self, field_name):
         input = self.driver.find_element(By.XPATH, f"//label[contains(text(), '{field_name}')]")
         input_id = input.get_attribute("for")

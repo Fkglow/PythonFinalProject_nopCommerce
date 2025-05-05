@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver import Keys
 
 from pages.base_page import BasePage
@@ -18,35 +19,43 @@ class ContactUsPageLocators:
 
 class ContactUsPage(BasePage):
 
+    @allure.step
     def enter_name(self, name):
         el = self.driver.find_element(*ContactUsPageLocators.NAME_INPUT)
         el.send_keys(name)
 
+    @allure.step
     def get_name_field_validation_error(self):
         el = self.driver.find_element(*ContactUsPageLocators.NAME_FIELD_ERROR)
         return el.text
 
+    @allure.step
     def enter_email(self, email):
         el = self.driver.find_element(*ContactUsPageLocators.EMAIL_INPUT)
         el.send_keys(email)
         el.send_keys(Keys.TAB)
 
+    @allure.step
     def get_email_field_validation_error(self):
         el = wait_5s_until_element_is_visible(self.driver, ContactUsPageLocators.EMAIL_FIELD_ERROR)
         return el.text
 
+    @allure.step
     def enter_enquiry(self, name):
         el = self.driver.find_element(*ContactUsPageLocators.ENQUIRY_INPUT)
         el.send_keys(name)
 
+    @allure.step
     def get_enquiry_field_validation_error(self):
         el = self.driver.find_element(*ContactUsPageLocators.ENQUIRY_FIELD_ERROR)
         return el.text
 
+    @allure.step
     def click_submit_button(self):
         el = self.driver.find_element(*ContactUsPageLocators.SUBMIT_BUTTON)
         el.click()
 
+    @allure.step
     def get_submit_enquiry_result_message(self):
         el = wait_5s_until_element_is_visible(self.driver, ContactUsPageLocators.ENQUIRY_SUBMIT_RESULT_MESSAGE)
         return el.text

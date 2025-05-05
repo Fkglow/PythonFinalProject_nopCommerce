@@ -1,13 +1,17 @@
+import allure
+
 from tests.base_test import BaseTest
 from helpers.DataGenerator import DataGenerator
 from helpers.csv_helper import CsvDataManager
 
+@allure.title("Succesfull registration")
 class RegistrationTest(BaseTest):
 
     def setUp(self):
         super().setUp()
         self.registration_page = self.home_page.header.click_register_button()
 
+    @allure.title("User registration")
     def test_successful_registration_all_fields(self):
         data_generator = DataGenerator()
         correct_email = data_generator.generate_valid_email()
@@ -23,7 +27,7 @@ class RegistrationTest(BaseTest):
 
         self.assertEqual("Your registration completed", registration_result_page.get_register_result_message())
 
-        CsvDataManager.save_credentials_in_csv_file("../test_data/valid_login_credentials", correct_email, correct_password)
+        CsvDataManager.save_credentials_in_csv_file("/test_data/valid_login_credentials", correct_email, correct_password)
 
 
 

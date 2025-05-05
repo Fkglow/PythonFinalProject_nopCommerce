@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 
 from pages.login_page import LoginPage
@@ -32,18 +33,22 @@ class Header:
     # def select_currency_by_visible_text(self, currency):
     #     self.currency_select.select_by_visible_text(currency)
 
+    @allure.step
     def click_register_button(self):
         self.header_links.find_element(*HeaderLocators.REGISTER_LINK_BUTTON).click()
         return RegistrationPage(self.driver)
 
+    @allure.step
     def click_login_button(self):
         self.header_links.find_element(*HeaderLocators.LOG_IN_LINK_BUTTON).click()
         return LoginPage(self.driver)
 
+    @allure.step
     def get_login_button_text(self):
-        el = wait_5s_until_element_is_visible(self.driver, HeaderLocators.LOG_IN_LINK_BUTTON)
+        el = wait_10s_until_element_is_visible(self.driver, HeaderLocators.LOG_IN_LINK_BUTTON)
         return el.text
 
+    @allure.step
     def get_shopping_cart_count(self):
         el = self.driver.find_element(By.CSS_SELECTOR, "span.cart-qty")
         el_text =  el.getText()
@@ -51,9 +56,11 @@ class Header:
         return shopping_cart_count
 
     # LOWER HEADER
+    @allure.step
     def enter_product_in_search_input(self, product_name):
         self.driver.find_element(*HeaderLocators.SEARCH_INPUT).send_keys(product_name)
 
+    @allure.step
     def click_search_button(self):
         self.driver.find_element(*HeaderLocators.SEARCH_BUTTON).click()
         return SearchPage(self.driver)

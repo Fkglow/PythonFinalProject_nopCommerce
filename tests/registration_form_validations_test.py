@@ -1,6 +1,9 @@
+import allure
+
 from tests.abstract_email_field_validation_test import AbstractEmailFieldValidationTest
 from helpers.DataGenerator import DataGenerator
 
+@allure.title("Registration form validations")
 class RegistrationFormValidationTest(AbstractEmailFieldValidationTest):
 
     def setUp(self):
@@ -16,12 +19,15 @@ class RegistrationFormValidationTest(AbstractEmailFieldValidationTest):
         self.assertEqual("Email is required.", self.registration_page.get_field_error("Email"))
         self.assertEqual("Password is required.", self.registration_page.get_field_error("Confirm password"))
 
+    @allure.title("Invalid email validation")
     def test_invalid_email_is_validated(self):
-        self.test_invalid_email_validation()
+        self.invalid_email_validation_test()
 
+    @allure.title("Email not matching regex validation")
     def test_email_not_matching_regex_is_validated(self):
-        self.test_email_not_matching_regex_validation()
+        self.email_not_matching_regex_validation_test()
 
+    @allure.title("Invalid password validation")
     def test_invalid_password_validation(self):
         invalid_password = DataGenerator().generate_invalid_password()
         self.registration_page.enter_main_password(invalid_password)
@@ -29,6 +35,7 @@ class RegistrationFormValidationTest(AbstractEmailFieldValidationTest):
         self.assertEqual("Password must meet the following rules: must have at least 6 characters and not greater than 64 characters"
                          ,error_message)
 
+    @allure.title("Password and confirm password must match validation")
     def test_passwords_must_match(self):
         password = DataGenerator().generate_valid_password()
         self.registration_page.enter_main_password(password)
