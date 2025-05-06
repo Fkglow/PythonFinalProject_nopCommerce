@@ -1,3 +1,4 @@
+import os
 import random
 
 import allure
@@ -24,7 +25,9 @@ class PasswordRecoveryTest(AbstractEmailFieldValidationTest):
 
     @allure.title("Password recovery for a valid email")
     def test_recover_password_for_valid_email(self):
-        random_valid_email = random.choice(CsvDataManager.get_emails_from_csv_file("/test_data/valid_login_credentials"))
+        base_dir = os.path.dirname(__file__)
+        file_path = os.path.join(base_dir, "..", "test_data", "valid_login_credentials")
+        random_valid_email = random.choice(CsvDataManager.get_emails_from_csv_file(file_path))
         self.recover_pass_page.enter_email(random_valid_email)
         self.recover_pass_page.click_recover_button()
         self.assertTrue(self.recover_pass_page.is_notification_bar_displayed())

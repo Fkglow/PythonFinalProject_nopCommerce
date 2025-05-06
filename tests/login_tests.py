@@ -19,7 +19,7 @@ class LoginTests(AbstractEmailFieldValidationTest):
         self.login_page = self.home_page.header.click_login_button()
 
     @allure.title("Succesfull login")
-    @data(*CsvDataManager.get_credentials_from_csv_file("test_data/valid_login_credentials"))
+    @data(*CsvDataManager.get_credentials_from_csv_file(file_path))
     @unpack
     def test_successful_login(self, email, password):
         self.login_page.enter_email(email)
@@ -29,7 +29,9 @@ class LoginTests(AbstractEmailFieldValidationTest):
 
     @allure.title("Incorrect password validation")
     def test_incorrect_password_validation(self):
-        random_valid_email = random.choice(CsvDataManager.get_emails_from_csv_file("/test_data/valid_login_credentials"))
+        base_dir = os.path.dirname(__file__)
+        file_path = os.path.join(base_dir, "..", "test_data", "valid_login_credentials")
+        random_valid_email = random.choice(CsvDataManager.get_emails_from_csv_file(file_path))
         self.login_page.enter_email(random_valid_email)
         self.login_page.enter_password(DataGenerator().generate_valid_password())
         self.login_page.click_log_in_button()

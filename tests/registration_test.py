@@ -1,3 +1,5 @@
+import os
+
 import allure
 
 from tests.base_test import BaseTest
@@ -13,6 +15,9 @@ class RegistrationTest(BaseTest):
 
     @allure.title("User registration")
     def test_successful_registration_all_fields(self):
+        base_dir = os.path.dirname(__file__)
+        file_path = os.path.join(base_dir, "..", "test_data", "valid_login_credentials")
+
         data_generator = DataGenerator()
         correct_email = data_generator.generate_valid_email()
         correct_password = data_generator.generate_valid_password()
@@ -27,7 +32,7 @@ class RegistrationTest(BaseTest):
 
         self.assertEqual("Your registration completed", registration_result_page.get_register_result_message())
 
-        CsvDataManager.save_credentials_in_csv_file("/test_data/valid_login_credentials", correct_email, correct_password)
+        CsvDataManager.save_credentials_in_csv_file(file_path, correct_email, correct_password)
 
 
 
