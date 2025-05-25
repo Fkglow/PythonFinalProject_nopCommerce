@@ -1,4 +1,6 @@
 import csv
+import json
+
 
 class CsvDataManager:
 
@@ -17,6 +19,11 @@ class CsvDataManager:
         for row in reader:
             rows.append(row)
         return rows
+
+    @staticmethod
+    def load_config(filename):
+        with open(filename, "r") as file:
+            return json.load(file)
 
     @staticmethod
     def get_emails_from_csv_file(filename):

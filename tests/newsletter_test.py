@@ -18,6 +18,3 @@ class NewsletterTest(BaseTest):
         footer.enter_email_to_newsletter_input("mail@mail.com")
         footer.click_subscribe_button()
         self.assertEqual("Thank you for signing up! A verification email has been sent. We appreciate your interest.", footer.get_newsletter_result_message())
-
-
-# NOT WORKING! ISSUE WITH COOKIES AND JS
